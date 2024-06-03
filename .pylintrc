@@ -1,0 +1,12 @@
+[MASTER]
+disable=
+    C0114, # missing-module-docstring
+    C0103,
+    C0115,
+    C0116,
+    C0301,
+    C3001, # 
+    ; E0611, # Unable to import
+    E0401,
+    R0903, # Too few public methods
+    R0913
