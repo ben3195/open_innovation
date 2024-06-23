@@ -1,9 +1,13 @@
 from app import app
-from app.Controllers.user_controller import get_users, add_user, get_user, update_user, delete_user
+from app.Controllers.user_controller import user_login, get_users, add_user, get_user, update_user, delete_user
 
 @app.route('/')
 def index():
     return "Hello World!"
+
+@app.route('/login', methods=['POST'])
+def login_route():
+    return user_login()
 
 @app.route('/users', methods=['GET'])
 def users():

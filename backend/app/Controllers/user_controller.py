@@ -1,7 +1,20 @@
 from flask import jsonify, request
 from app import db
 from app.Models.User import User
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
+
+def user_login():
+    email = request.json.get('email', None)
+    password = request.json.get(check_password_hash('password', None))
+
+    user = User.query.filter_by(email=email).first()
+    if user and user.password == password:
+        access_token = create_access_token(identity=user.id)
+        return jsonify(access_token=access_token), 200
+    
+    return jsonify({"msg": "Bad username or password"}), 401
+
 
 def get_users():
     all_users = User.query.all()
