@@ -21,6 +21,8 @@ ma = Marshmallow(app)
 # Initialisation de JWT
 jwt = JWTManager(app)
 
+# Importer les vues et les modèles après l'initialisation de db et ma
+from app.Models import User, Sport, TrainingSession, SessionSports
 from app.Views import user_view
 from app.Views import sport_view
 from app.Views import training_session_view

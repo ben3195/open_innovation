@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from app import db
-from app.Models.TrainingSession import TrainingSession, training_session_schema
+from app.Models.TrainingSession import TrainingSession, TrainingSessionSchema
 from app.Models.User import User
 from flask_jwt_extended import get_jwt_identity
 
@@ -14,7 +14,7 @@ def get_all_training_sessions():
     else:
         sessions = TrainingSession.query.filter_by(athlete_id=current_user_id).all()
 
-    return training_session_schema.jsonify(sessions)
+    return TrainingSessionSchema.jsonify(sessions)
 
 def get_training_session(training_session_id):
     training_session = TrainingSession.query.get(training_session_id)
@@ -36,9 +36,8 @@ def add_training_session():
     title = data.get('title')
     description = data.get('description')
     date = data.get('date')
-    sports = data.get('sports')
 
-    new_training_session = TrainingSession(trainer_id=trainer_id, athlete_id=athlete_id, title=title, description=description, date=date, sports=sports)
+    new_training_session = TrainingSession(trainer_id=trainer_id, athlete_id=athlete_id, title=title, description=description, date=date)
     db.session.add(new_training_session)
     db.session.commit()
 
