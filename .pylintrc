@@ -8,5 +8,6 @@ disable=
     C3001, # 
     ; E0611, # Unable to import
     E0401,
+    E1120,
     R0903, # Too few public methods
     R0913

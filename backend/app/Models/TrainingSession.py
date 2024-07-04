@@ -1,7 +1,8 @@
 # backend/app/Models/TrainingSession.py
 
+from marshmallow import fields, Schema, post_dump
 from app import db, ma
-from .SessionSports import SessionSports
+from .SessionSports import SessionSportsSchema
 
 class TrainingSession(db.Model):
     __tablename__ = 'training_session'
@@ -11,7 +12,6 @@ class TrainingSession(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=True)
     date = db.Column(db.DateTime, nullable=False)
-
     sports = db.relationship('SessionSports', backref='training_session', lazy=True)
 
     def __init__(self, trainer_id, athlete_id, title, description, date):
@@ -26,3 +26,5 @@ class TrainingSessionSchema(ma.Schema):
         model = TrainingSession
         include_relationships = True
         load_instance = True
+    sports = fields.Nested(SessionSportsSchema, many=True)
+    sport_name = fields.Function(lambda obj: obj.sports[0].sport.name if obj.sports else None)
